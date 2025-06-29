@@ -1,0 +1,74 @@
+body {
+    background: #fff;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-logo {
+    margin-top: 40px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+.logo {
+    width: 320px;
+    max-width: 90vw;
+    height: auto;
+    filter: drop-shadow(0 2px 12px rgba(0,0,0,0.10));
+}
+
+.perfil-container {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+    padding: 40px 32px 32px 32px;
+    max-width: 400px;
+    width: 90vw;
+    text-align: center;
+}
+.perfil-container h2 {
+    color: #c90076;
+    font-size: 1.5rem;
+    margin-bottom: 32px;
+    font-weight: 700;
+}
+.opciones {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+}
+.opcion {
+    background: #f7f7f7;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 24px 18px 16px 18px;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 120px;
+}
+.opcion:hover {
+    box-shadow: 0 6px 18px rgba(201,0,118,0.10);
+    transform: translateY(-4px) scale(1.04);
+}
+.opcion img {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 12px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #c90076;
+    padding: 6px;
+}
+.opcion span {
+    color: #222;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
