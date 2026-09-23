@@ -10,6 +10,18 @@ Web-based inventory management system developed as an academic software project 
 - **Build:** Maven
 - **Application server:** Apache Tomcat 11
 
+## Continuous Integration
+
+This project uses GitHub Actions to automatically build and validate the application on every push and pull request to `main`.
+
+The CI pipeline:
+
+- Runs on Ubuntu
+- Uses Java 17
+- Caches Maven dependencies
+- Builds the application with `mvn clean package`
+- Verifies that the WAR can be generated successfully
+
 ## Key Features
 
 - Product and category management
@@ -145,7 +157,6 @@ This is an academic project originally developed in 2025. The current version us
 - Replace MD5 password hashing with Argon2 or bcrypt
 - Move database credentials to environment variables
 - Add automated unit and integration tests
-- Add a CI pipeline with GitHub Actions
 - Containerize the application and database for reproducible local environments
 - Add screenshots and an architecture diagram to the project documentation
 
