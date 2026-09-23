@@ -1,221 +1,154 @@
-# 🍽️ BesoFrances - Sistema de Gestión de Inventario
+# BesoFrances Inventory Management System
 
-Sistema web de gestión de inventario para el restaurante BesoFrances, convertido de PHP a JSP con Jakarta EE y Tomcat 11.
+Web-based inventory management system developed as an academic software project for restaurant operations. The application supports product and category management, stock movements, inventory closing, audit history, authentication, and role-based access.
 
-## 📋 Características
+## Tech Stack
 
-- **Gestión de Productos**: Agregar, editar, eliminar productos con categorías
-- **Control de Stock**: Ingreso de stock, mermas, cambios de estado
-- **Gestión de Categorías**: Organización de productos por categorías
-- **Historial de Acciones**: Registro completo de todas las operaciones
-- **Cierre de Stock**: Generación de reportes de inventario
-- **Autenticación**: Sistema de login con roles (Administrador, Entrenador, FullTime, PartTime)
-- **Interfaz Responsiva**: Diseño moderno y adaptable
+- **Backend:** Java 17, Jakarta EE, Servlets
+- **Frontend:** JSP, JavaScript, CSS
+- **Database:** MySQL 8
+- **Build:** Maven
+- **Application server:** Apache Tomcat 11
 
-## 🏗️ Arquitectura
+## Key Features
 
-### Capas del Sistema
-- **Presentación**: JSP + CSS + JavaScript
-- **Control**: Servlets (Jakarta EE)
-- **Acceso a Datos**: DAOs (Data Access Objects)
-- **Base de Datos**: MySQL
+- Product and category management
+- Stock entry and inventory adjustments
+- Waste/loss registration
+- Inventory movement history
+- Inventory closing and reporting
+- Authentication and role-based access
+- Separate administrator and user interfaces
+- Audit history for inventory operations
 
-### DAOs Implementados
-- `ProductoDao`: Gestión completa de productos y stock
-- `CategoriaDao`: Administración de categorías
-- `UsuarioDao`: Autenticación y gestión de usuarios
-- `HistorialDao`: Registro de acciones del sistema
-- `CierreStockDao`: Generación de cierres de inventario
-- `MovimientoDao`: Consulta de movimientos históricos
+## Architecture
 
-## 🚀 Instalación
+The application follows a layered structure:
 
-### Prerrequisitos
-- Java 17 o superior
-- Apache Tomcat 11
-- MySQL 8.0 o superior
-- Maven (opcional, para compilación)
+```text
+Presentation      JSP / JavaScript / CSS
+       ↓
+Controllers       Jakarta Servlets
+       ↓
+Data Access       DAO classes
+       ↓
+Database          MySQL
 
-### 1. Configuración de la Base de Datos
-
-```sql
--- Crear base de datos
-CREATE DATABASE analisisbf CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE analisisbf;
-
--- Importar el archivo SQL proporcionado
--- El archivo contiene todas las tablas y datos de ejemplo
 ```
 
-### 2. Configuración del Proyecto
+The repository separates responsibilities into controllers, data-access objects, models, filters, configuration, and presentation resources.
 
-1. **Clonar o descargar** el proyecto
-2. **Configurar la conexión** en `src/main/java/com/mycompany/besofrances/config/Conexion.java`:
-   ```java
-   private static final String HOST = "localhost";
-   private static final String USER = "root";
-   private static final String PASS = "";
-   private static final String DB = "analisisbf";
-   ```
+## Project Structure
 
-### 3. Compilación y Despliegue
+```text
+src/main/
+├── java/com/mycompany/besofrances/
+│   ├── config/       # Database and application configuration
+│   ├── controller/   # Jakarta Servlets
+│   ├── dao/          # Data Access Objects
+│   ├── filter/       # Session and access filters
+│   └── model/        # Domain models
+├── resources/
+└── webapp/
+    ├── css/
+    ├── js/
+    ├── img/
+    └── views/
+```
 
-#### Opción A: Usando Maven
+## Main Components
+
+### Data Access
+
+- `ProductoDao` — product and stock operations
+- `CategoriaDao` — category management
+- `UsuarioDao` — user authentication and access
+- `HistorialDao` — audit history
+- `CierreStockDao` — inventory closing
+- `MovimientoDao` — inventory movement queries
+
+### HTTP Endpoints
+
+The application exposes servlet-based endpoints for operations such as:
+
+- listing, creating, editing, and deleting products
+- stock entry and adjustments
+- waste/loss registration
+- inventory closing
+- movement history
+- category management
+
+## Database
+
+The project includes `analisisbf.sql` with the database structure and sample data.
+
+Main entities include:
+
+- users and roles
+- products and categories
+- product stock details
+- action history
+- inventory closings
+
+## Running Locally
+
+### Requirements
+
+- Java 17+
+- Apache Tomcat 11
+- MySQL 8+
+- Maven
+
+### 1. Prepare the database
+
+Create the MySQL database and import `analisisbf.sql`.
+
+```sql
+CREATE DATABASE analisisbf
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_general_ci;
+```
+
+### 2. Configure the database connection
+
+Update the local database settings in:
+
+```text
+src/main/java/com/mycompany/besofrances/config/Conexion.java
+```
+
+### 3. Build
+
 ```bash
 mvn clean package
 ```
 
-#### Opción B: Usando IDE (NetBeans, Eclipse, IntelliJ)
-1. Importar como proyecto Maven
-2. Compilar el proyecto
-3. Desplegar en Tomcat
+### 4. Deploy
 
-### 4. Despliegue en Tomcat
+Deploy the generated WAR file from `target/` to Apache Tomcat and start the server.
 
-1. Copiar el archivo `target/BesoFrances-1.0-SNAPSHOT.war` a `$TOMCAT_HOME/webapps/`
-2. Iniciar Tomcat
-3. Acceder a `http://localhost:8080/BesoFrances-1.0-SNAPSHOT/`
+Additional deployment notes are available in:
 
-## 👥 Usuarios de Prueba
+- `INSTRUCCIONES_DESPLEGUE.md`
+- `VERIFICACION_DESPLEGUE.md`
 
-### Administrador
-- **Usuario**: `nicolead`
-- **Contraseña**: `123456`
-- **Rol**: Administrador
-- **Perfil**: Admin
+## What I Learned
 
-### Usuario Regular
-- **Usuario**: `richardpt`
-- **Contraseña**: `123456`
-- **Rol**: PartTime
-- **Perfil**: Usuario
+This project gave me practical experience with layered Java web architecture, HTTP request handling with Servlets, the DAO pattern, relational database access, session management, role-based access control, inventory workflows, Maven builds, and deployment to Apache Tomcat.
 
-## 📊 Estructura de la Base de Datos
+## Security Note
 
-### Tablas Principales
-- `usuarios`: Información de usuarios y autenticación
-- `rol`: Roles del sistema (Administrador, Entrenador, FullTime, PartTime)
-- `producto`: Productos del inventario
-- `categoria`: Categorías de productos
-- `detalle_producto`: Stock y estados de productos
-- `historial_accion`: Registro de todas las acciones
-- `cierre_stock`: Reportes de cierre de inventario
+This is an academic project originally developed in 2025. The current version uses MD5 for password hashing, which is **not suitable for production systems**. A production-ready version should migrate password storage to a modern password-hashing algorithm such as Argon2 or bcrypt and move database credentials out of source code into environment-based configuration.
 
-### Relaciones
-- Usuarios → Roles (1:N)
-- Productos → Categorías (N:1)
-- Productos → Detalle_Producto (1:N)
-- Usuarios → Historial_Accion (1:N)
+## Future Improvements
 
-## 🔧 APIs REST
-
-### Productos (`/api/productos`)
-- `GET ?action=listar` - Listar productos con stock
-- `GET ?action=listar_productos_simples` - Listar productos básicos
-- `POST ?action=agregar` - Agregar producto
-- `POST ?action=editar` - Editar producto
-- `POST ?action=eliminar` - Eliminar producto
-- `POST ?action=ingresar_stock` - Ingresar stock
-- `POST ?action=cambiar_estado` - Cambiar estado de producto
-- `POST ?action=mermar` - Registrar merma
-- `POST ?action=cerrar_stock` - Generar cierre de stock
-- `GET ?action=listar_cierres_stock` - Listar cierres
-- `GET ?action=listar_movimientos` - Listar movimientos
-
-### Categorías (`/api/categorias`)
-- `GET ?action=listar` - Listar categorías
-- `POST ?action=agregar` - Agregar categoría
-- `POST ?action=editar` - Editar categoría
-- `POST ?action=eliminar` - Eliminar categoría
-
-## 🎨 Interfaz de Usuario
-
-### Páginas Principales
-- **Login**: `/views/login.jsp`
-- **Selección de Perfil**: `/views/roles/seleccionar_perfil.jsp`
-- **Panel Admin**: `/views/admin/page_admin.jsp`
-- **Panel Usuario**: `/views/usuario/page_usuario.jsp`
-
-### Características de la UI
-- Diseño responsivo
-- Modales para formularios
-- Búsqueda en tiempo real
-- Tablas dinámicas
-- Notificaciones de estado
-
-## 🔒 Seguridad
-
-- **Autenticación**: Login con usuario y contraseña MD5
-- **Autorización**: Control de acceso por roles
-- **Sesiones**: Gestión de sesiones con filtros
-- **Validación**: Validación de datos en frontend y backend
-
-## 📝 Logs y Auditoría
-
-- **Historial Completo**: Todas las acciones se registran
-- **Información Detallada**: Usuario, fecha, acción, motivo
-- **Trazabilidad**: Seguimiento completo de cambios en productos
-
-## 🛠️ Desarrollo
-
-### Estructura del Proyecto
-```
-src/
-├── main/
-│   ├── java/
-│   │   └── com/mycompany/besofrances/
-│   │       ├── config/          # Configuración y conexión
-│   │       ├── controller/      # Servlets
-│   │       ├── dao/            # Data Access Objects
-│   │       ├── filter/         # Filtros de seguridad
-│   │       └── model/          # Clases modelo
-│   ├── resources/
-│   │   └── META-INF/
-│   └── webapp/
-│       ├── css/               # Estilos
-│       ├── js/                # JavaScript
-│       ├── img/               # Imágenes
-│       └── views/             # Páginas JSP
-```
-
-### Tecnologías Utilizadas
-- **Backend**: Java 17, Jakarta EE 11, Servlets
-- **Frontend**: JSP, CSS3, JavaScript (ES6+)
-- **Base de Datos**: MySQL 8.0
-- **Servidor**: Apache Tomcat 11
-- **Build Tool**: Maven
-
-## 🐛 Solución de Problemas
-
-### Error de Conexión a BD
-1. Verificar que MySQL esté ejecutándose
-2. Confirmar credenciales en `Conexion.java`
-3. Verificar que la base de datos `analisisbf` exista
-
-### Error 404 en Servlets
-1. Verificar mapeos en `@WebServlet`
-2. Confirmar que el WAR se desplegó correctamente
-3. Revisar logs de Tomcat
-
-### Error de Autenticación
-1. Verificar que el usuario exista en la BD
-2. Confirmar que la contraseña esté en MD5
-3. Verificar permisos de rol
-
-## 📞 Soporte
-
-Para reportar problemas o solicitar nuevas funcionalidades:
-1. Revisar la documentación
-2. Verificar logs del servidor
-3. Probar con usuarios de ejemplo
-4. Contactar al equipo de desarrollo
-
-## 📄 Licencia
-
-Este proyecto es propiedad de BesoFrances y está destinado para uso interno del restaurante.
+- Replace MD5 password hashing with Argon2 or bcrypt
+- Move database credentials to environment variables
+- Add automated unit and integration tests
+- Add a CI pipeline with GitHub Actions
+- Containerize the application and database for reproducible local environments
+- Add screenshots and an architecture diagram to the project documentation
 
 ---
 
-**Versión**: 1.0-SNAPSHOT  
-**Última actualización**: Junio 2025  
-**Desarrollado para**: BesoFrances Restaurant 
+**Academic project · 2025**
